@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - INDIGO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a2e00a7c2a.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #381d7e, #f693f2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .login-container h1 {
+      color: #7f5af0;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 28px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px 40px 12px 14px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: border 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #7f5af0;
+      outline: none;
+    }
+
+    .input-group i {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      color: #999;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #7f5af0;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-container button:hover {
+      background-color: #6845d3;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-container" id="login-section">
+    <h1>Bem-vindo à INDIGO</h1>
+
+    <div class="input-group">
+      <input type="text" id="username" placeholder="Usuário" />
+      <i class="fas fa-user"></i>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Senha" />
+      <i class="fas fa-lock"></i>
+    </div>
+
+    <button onclick="login()">Entrar</button>
+    <p class="error" id="error-message"></p>
+  </div>
+
+  <script>
+    const errorMessage = document.getElementById('error-message');
+
+    const users = {
+      "Nathany Santana": "NatyIndigo2025",
+      "Leonardo Moreira": "LeoIndigo2025",
+      "Mauro Junior": "MauroIndigo2025",
+      "Kauana Sgobi": "KauIndigo2025",
+      "Marcus Silva": "MarcusIndigo2025",
+      "Maicon Rossetti": "MaiconIndigo2025",
+      "Raissa Bernardo": "RaissaIndigo2025",
+      "Erick Lastra": "ErickIndigo2025",
+      "AdminGeral": "adm2025"
+    };
+
+    // Se já estiver logado, redireciona direto pra filamento.html
+    if (localStorage.getItem("logado") === "true") {
+      window.location.href = "filamento.html";
+    }
+
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (users[username] && users[username] === password) {
+        localStorage.setItem("logado", "true");
+        window.location.href = "filamento.html";
+      } else {
+        errorMessage.textContent = "Usuário ou senha inválidos.";
+      }
+    }
+  </script>
+
+</body>
+</html>

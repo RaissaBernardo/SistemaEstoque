@@ -1,0 +1,331 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;       /* Ocupa a altura inteira da tela */
+  background-color: #ffe6fa;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+  flex-direction: column;
+}
+
+header {
+  background-color: #a5b5f7;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1500px;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: white; 
+  border-radius: 12px;    
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+} 
+
+.sidebar {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 250px;
+  height: calc(100vh - 50px); /* ocupa o restante da tela abaixo do topbar */
+  background: linear-gradient(to bottom, #4b4ba3, #1d207e);
+  padding: 30px 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  color: white;
+  font-weight: 500;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar h2 {
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+  color: #fff;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 10px;
+}
+
+.sidebar a {
+  display: block;
+  margin: 15px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: transform 0.2s, background-color 0.3s;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+.menu-link {
+  display: block;
+  margin: 15px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: transform 0.2s, background-color 0.3s;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+.menu-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+}
+
+.logout-link {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 14px;
+  border-radius: 12px;
+  margin-top: 40px;
+  text-align: center;
+  font-weight: bold;
+  color: #ffb3b3;
+  transition: background 0.3s, transform 0.2s;
+  text-decoration: none;
+}
+
+.logout-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.topbar {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #381d7e;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}  
+
+/* Estilizando as seções do formulário */
+.login-section, .form-section, .remove-section, .product-list-section {
+  margin-top: 60px; /* Espaço pro topbar */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+  display: flex;
+  gap: 20px;
+}
+
+.form-left, .form-right {
+  flex: 1;
+}
+
+.image-preview-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  background-color: #f693f2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn.danger {
+  background-color: #ff4444;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  width: 70%;
+  max-width: 500px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.produtos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* centraliza os cards */
+  gap: 20px;
+  padding: 20px;
+}
+
+.produto {
+  border: 2px solid #0000009f;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px;
+  box-shadow: 0 4px 10px rgba(163, 75, 163, 0.3);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px; /* define largura fixa */
+  background-color: #fff;
+}
+
+.produto img {
+  max-width: 160px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: none;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.produto h3 {
+  font-size: 25px;
+  margin: 10px 0 8px;
+  color: #5b4b8a;
+}
+
+.produto p {
+  font-size: 20px;
+  margin: 0 0 12px;
+  color: #444;
+}
+
+.produto button {
+  padding: 8px 14px;
+  background: linear-gradient(to right, #8f99e5, #1d3c7e);
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  align-self: stretch;
+  transition: background 0.3s ease;
+}
+
+.produto button:hover {
+  background: linear-gradient(to right, #1d3c7e, #8f99e5);
+}
+
+/* Estilo da barra de busca */
+#busca-nome {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 15px;
+  margin: 20px auto;
+  display: block;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#busca-nome:focus {
+  border-color: #4b4e8a; 
+  box-shadow: 0 0 8px rgba(75, 82, 138, 0.3);
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #381d7e;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.rolo-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+.btn-danger {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-danger:hover {
+  background-color: #c0392b;
+}

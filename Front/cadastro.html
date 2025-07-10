@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INDIGO - Cadastro de Produtos</title>
+  <link rel="stylesheet" href="css/cadastro.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button onclick="toggleMenu()" class="menu">☰</button>
+    <h1 id="logo">INDIGO</h1>
+  </header>
+
+    <nav class="sidebar" id="sidebar">
+      <h2>Menu</h2>
+      <a href="filamento.html" class="menu-link">Estoque de filamento</a>
+      <a href="resina.html" class="menu-link">Estoque de resina</a>
+      <a href="simulador.html" class="menu-link">Simulador de projetos</a>
+      <a href="cadastro.html" class="menu-link">Inserir filamento no estoque</a>
+      <a href="cadastroResina.html" class="menu-link">Inserir resina no estoque</a>
+      <a href="controle.html" class="menu-link">Controle de Estoque</a>
+
+      <a href="index.html" onclick="logout()" class="logout-link">Sair</a>
+    </nav>
+
+  <div class="container">
+    <main class="content">
+      <!-- BARRA DE BUSCA -->
+      <div class="search-bar" style="display:none;">
+        <input type="text" id="busca-nome" placeholder="Buscar produto...">
+        <button class="btn" onclick="buscarProdutoPorNome()">
+          <i class="fas fa-search"></i> Buscar
+        </button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="login-section" class="login-section">
+        <h2><i class="fas fa-user-lock"></i> Login</h2>
+        <label>Usuário:
+          <input type="text" id="login-username" placeholder="Digite o usuário">
+        </label>
+        <br>
+        <label>Senha:
+          <input type="password" id="login-password" placeholder="Digite a senha">
+        </label>
+        <button class="btn" onclick="fazerLogin()"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+        <span id="error-login" class="error-message"></span>
+      </div>
+
+      <!-- CADASTRO -->
+      <section id="cadastro-section" class="form-section" style="display: none;">
+        <h2>Insira o produto desejado <span>• Cadastro de Produtos</span></h2>
+        <div class="form-container">
+          <div class="form-left">
+            <label>Nome:
+              <input type="text" id="nome">
+              <span class="error-message" id="error-nome"></span>
+            </label>
+            <br>
+            <label>Cor:
+              <input type="text" id="cor">
+              <span class="error-message" id="error-cor"></span>
+            </label>
+            <br>
+            <label>Fabricante:
+              <input type="text" id="fabricante">
+              <span class="error-message" id="error-fabricante"></span>
+            </label>
+            <br>
+            <label>Preço:
+              <input type="number" id="preco" step="0.01" min="0">
+              <span class="error-message" id="error-preco"></span>
+            </label>
+            <br>
+            <label>Quantidade de Rolos:
+              <input type="number" id="quantidade" min="0" readonly>
+              <span class="error-message" id="error-quantidade"></span>
+            </label>
+            <br>
+            <div id="rolos-container">
+              <label>Peso do Rolo (1) em gramas:
+                <input type="number" class="rolo-peso-input" placeholder="Ex: 500" step="0.01" min="0">
+              </label>
+            </div>
+            <br>
+            <div id="imagens-container">
+              <label>URL da Imagem (1):
+                <input type="url" class="imagem-url-input" placeholder="https://exemplo.com/imagem1.jpg" oninput="previewAllImages()">
+              </label>
+            </div>
+            <br>
+            <div id="compras-container">
+              <label>Link de Compra (1):
+                <input type="url" class="compra-url-input" id="compra" placeholder="https://exemplo.com/compra1">
+              </label>
+            </div>
+            <span id="error-imagens" class="error-message"></span>
+            <button type="button" class="btn" onclick="adicionarCampoRolo()"><i class="fas fa-plus"></i> Adicionar outro rolo</button>
+            <button type="button" class="btn" onclick="adicionarCampoImagem()"><i class="fas fa-plus"></i> Adicionar outra imagem</button>
+            <button type="button" class="btn" onclick="adicionarCampoLink()"><i class="fas fa-plus"></i> Adicionar outro link de compra</button>
+            <br>
+            <button class="btn" onclick="cadastrarProduto()"><i class="fas fa-box"></i> Cadastrar Produto</button>
+          </div>
+          <div class="form-right">
+            <p><strong>Pré-visualização das Imagens:</strong></p>
+            <div id="preview-container" class="image-preview-container"></div>
+          </div>
+        </div>
+      </section>
+
+<br>
+
+      <!-- LISTAGEM -->
+      <section class="product-list-section">
+        <h2><i class="fas fa-list"></i> Produtos Disponíveis</h2>
+        <div id="produtos-lista" class="product-grid"></div>
+      </section>
+    </div>
+
+    <!-- MODAL DE EDIÇÃO -->
+    <div id="editProductModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" onclick="fecharModal()">×</span>
+        <form id="edit-product-form" onsubmit="return false;">
+          <input type="hidden" id="edit-original-nome">
+          <label>Nome:
+            <input type="text" id="edit-nome" required>
+            <span class="error-message" id="error-edit-nome"></span>
+          </label>
+          <br>
+          <label>Cor:
+            <input type="text" id="edit-cor" required>
+            <span class="error-message" id="error-edit-cor"></span>
+          </label>
+          <br>
+          <label>Fabricante:
+            <input type="text" id="edit-fabricante" required>
+            <span class="error-message" id="error-edit-fabricante"></span>
+          </label>
+          <br>
+          <label>Preço:
+            <input type="number" id="edit-preco" step="0.01" min="0" required>
+            <span class="error-message" id="error-edit-preco"></span>
+          </label>
+          <br>
+          <label>Quantidade de Rolos:
+            <input type="number" id="edit-quantidade" min="0" readonly>
+            <span class="error-message" id="error-edit-quantidade"></span>
+          </label>
+          <br>
+          <div id="edit-rolos-container">
+            <label>Rolos:</label>
+          </div>
+          <br>
+          <div id="edit-imagens-container">
+            <label>URLs das Imagens:</label>
+          </div>
+          <br>
+          <div id="edit-compras-container">
+            <label>Links de Compra:</label>
+          </div>
+          <br>
+          <span class="error-message" id="error-edit-imagens"></span>
+          <button type="button" class="btn" onclick="adicionarCampoRoloModal()">
+            <i class="fas fa-plus"></i> Adicionar Rolo
+          </button>
+          <button type="button" class="btn" onclick="adicionarCampoImagemModal()">
+            <i class="fas fa-plus"></i> Adicionar outra imagem
+          </button>
+          <button type="button" class="btn" onclick="adicionarCampoCompraModal()">
+            <i class="fas fa-plus"></i> Adicionar outro link de compra
+          </button>
+          <div id="edit-preview-container" class="image-preview-container"></div>
+          <br>
+          <button type="button" class="btn" onclick="atualizarProdutoPeloNome()">
+            <i class="fas fa-save"></i> Atualizar Produto
+          </button>
+          <button type="button" class="btn" onclick="fecharModal()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+    <p></p>
+
+    <br>
+    <footer>
+      <p>© 2025 Indigo. Todos os direitos reservados.</p>
+    </footer>
+
+    <div id="custom-alert" class="alert" style="display: none;"></div>
+    <script src="js/cadastro.js"></script>
+  </body>
+</html>

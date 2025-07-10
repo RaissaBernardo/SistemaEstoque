@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Indigo - Estoque de Filamento</title>
+  <link rel="stylesheet" href="resina/resina.css">
+</head>
+<body>
+    <nav class="sidebar" id="sidebar">
+      <h2>Menu</h2>
+      <a href="filamento.html" class="menu-link">Estoque de filamento</a>
+      <a href="resina.html" class="menu-link">Estoque de resina</a>
+      <a href="simulador.html" class="menu-link">Simulador de projetos</a>
+      <a href="cadastro.html" class="menu-link">Inserir filamento no estoque</a>
+      <a href="cadastroResina.html" class="menu-link">Inserir resina no estoque</a>
+      <a href="controle.html" class="menu-link">Controle de Estoque</a>
+
+      <a href="index.html" onclick="logout()" class="logout-link">Sair</a>
+    </nav>
+
+    <header class="topbar">
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <h1>INDIGO</h1>
+    </header>
+
+  <div class="container">
+    <main class="content">
+      <input type="text" id="busca-nome" placeholder="Ex: ABS preto" />
+      
+      <section class="resinas" id="resinas-container">
+        <!-- Resinas vão ser inseridas aqui via JS -->
+      </section>
+
+    </main>
+
+  </div>
+
+    <footer>
+    <p>&copy; 2025 Indigo. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="resina/resina.js"></script>
+</body>
+</html>
